@@ -1,12 +1,15 @@
 import React from 'react';
 import { GlobalStyle } from './style';
-import Wrapper from '../../common/wrapper';
+import Router from '../router';
+import { HashRouter } from 'react-router-dom';
 
 const App: React.FC = () => {
   return (
     <>
       <GlobalStyle />
-      <Wrapper />
+      <HashRouter>
+        <Router />
+      </HashRouter>
     </>
   );
 };
