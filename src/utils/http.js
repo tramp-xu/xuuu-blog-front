@@ -1,11 +1,11 @@
 import axios from 'axios';
 // import qs from 'qs'; // 用来将payload方式转成formdata
 import {message} from 'antd';
-import global from './global';
-const env = global();
+// import global from './global';
+// const env = global();
 
-//  测试环境
-axios.defaults.baseURL = env.baseUrl;
+// //  测试环境
+// axios.defaults.baseURL = env.baseUrl;
 // axios.defaults.baseURL = 'http://localhost:8888';
 // 配置允许跨域携带cookie
 axios.defaults.withCredentials = true;
@@ -30,9 +30,9 @@ axios.interceptors.response.use(
       return Promise.resolve(data);
     } else if (code === 'user-not-login') {
       message.error(resMessage);
-      setTimeout(() => {
-        window.location.href = env.redirect;
-      }, 200);
+      // setTimeout(() => {
+      //   window.location.href = env.redirect;
+      // }, 200);
       return Promise.reject(new Error('用户未登录'));
     }else if(code === '201'){
       message.info(resMessage);
@@ -52,9 +52,9 @@ axios.interceptors.response.use(
         break;
       case 401:
         message.error(`未授权，或登录过期：${status}`);
-        setTimeout(() => {
-          window.location.href = env.redirect;
-        }, 200);
+        // setTimeout(() => {
+        //   window.location.href = env.redirect;
+        // }, 200);
         break;
       case 408:
         message.error(`请求超时：${status}`);
@@ -108,7 +108,7 @@ http.urlencodedPost = (api, data) => {
   return new Promise((resolve,reject) => {
     axios.post(api, fd, config).then((res) => {
       resolve(res);
-    }).catch((err)=>{
+    }).catch((err) => {
       reject(err);
     });
   });
@@ -120,7 +120,7 @@ http.get = (api, data) => {
   return new Promise((resolve,reject) => {
     axios.get(api, {params}).then((res) => {
       resolve(res);
-    }).catch((err)=>{
+    }).catch((err) => {
       reject(err);
     });
   });
@@ -131,7 +131,7 @@ http.post = (api, data) => {
   return new Promise((resolve,reject) => {
     axios.post(api, data).then((res) => {
       resolve(res);
-    }).catch((err)=>{
+    }).catch((err) => {
       reject(err);
     });
   });

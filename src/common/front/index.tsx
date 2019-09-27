@@ -18,11 +18,11 @@ class Front extends Component<FProps>{
           <Route
             exact
             path={match.path}
-            render={() => <Redirect to={`${match.path}/articles`}></Redirect>}
+            render={() => <Redirect to={`${match.path}/article`}></Redirect>}
           ></Route>
           <Route
             component={Articles}
-            path={`${match.path}/articles`}
+            path={`${match.path}/article`}
           ></Route>
           <Route
             component={About}

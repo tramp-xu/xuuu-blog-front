@@ -1,70 +1,29 @@
-import React, { Component } from 'react';
-import Swapper from './swapper';
-import { ContentWrapper } from './style';
-import Article from './article';
+import React from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import ArticleList from './list';
+import ArticleDetail from './detail';
 
-
-export interface ArtcileModel  {
-  id: string,
-  title: string,
-  short: string,
-  author: string,
-  content: any,
-  startDate: string,
-  updateDate?: string,
-  tags?: Array<string>
+export interface FProps {
+  match: any
 }
 
-const articles:Array<ArtcileModel> = [
-  {
-    id: '1',
-    title: 'webpack4 的环境配置',
-    short: '简单的介绍一下环境的配置',
-    author: 'Xuuu',
-    content: 'xxxxxxxxxfgdsgsdg dsadsa',
-    startDate: '2019-01-08',
-    updateDate: '2019-06-30',
-    tags: ['webpack', '前端']
-  },
-  {
-    id: '2',
-    title: '微信小程序的接口封装',
-    short: '接口封装',
-    author: 'Xuuu',
-    content: 'xxxxxxxxxfgdsgsdg dsadsa',
-    startDate: '2019-05-08',
-    updateDate: '2019-09-30',
-    tags: ['微信小程序', '前端']
-  }
-];
-
-export default class Articles extends Component {
-
-  public _renderArticles = (record: Array<ArtcileModel>) => {
-    if (record.length) {
-      return record.map(item => {
-        return (
-          <Article key={item.id}
-            model={item}
-          ></Article>
-        );
-      });
-    } else {
-      return (<span>主人太懒了，什么也没有写!</span>);
-    }
-  }
-
-  public render() {
-    return (
-      <>
-        <Swapper />
-        <ContentWrapper>
-          <div className="article-wrapper">
-            {this._renderArticles(articles)}
-          </div>
-          <div className="minor-info"></div>
-        </ContentWrapper>
-      </>
-    );
-  }
+export default function ArticleRouter(props: FProps) {
+  let {match} = props;
+  return (
+    <Switch>
+      <Route
+        exact
+        path={match.path}
+        render={() => <Redirect to={`${match.path}/list`}></Redirect>}
+      ></Route>
+      <Route
+        component={ArticleList}
+        path={`${match.path}/list`}
+      ></Route>
+      <Route
+        component={ArticleDetail}
+        path={`${match.path}/detail/:id`}
+      ></Route>
+    </Switch>
+  );
 }

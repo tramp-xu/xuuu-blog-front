@@ -1,5 +1,5 @@
-import http from '@/utils/http';
+import http from '../../utils/http';
 
-export function _login (data) {
-  return http.get('/login/admin', data);
-}
+export const _login = (data) => {
+  return http.post('/api/login', data);
+};

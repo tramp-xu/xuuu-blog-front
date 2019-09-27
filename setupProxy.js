@@ -1,18 +1,15 @@
-// import proxy from "http-proxy-middleware";
+const proxy = require('http-proxy-middleware');
 
-// const target = "xxxxx"; // 测试 ip
-// const target = 'http://10.190.64.21:8040'; // 内部环境 ip
-// const target = 'http://10.190.64.22:8040'; // 开发 ip
-// const target = 'http://10.200.153.1:8020'; // 亚萍 ip
-// const target = 'http://10.190.64.22:8030'; // 开发 ip
+const target = 'http://localhost:8080'; // 测试 ip
 
-// module.exports = function(app) {
-//   // ...You can now register proxies as you wish!
-//   app.use(
-//     proxy(["/login"], {
-//       target: target,
-//       secure: false,
-//       changeOrigin: true
-//     })
-//   );
-// };
+module.exports = function(app) {
+  // ...You can now register proxies as you wish!
+  debugger;
+  app.use(
+    proxy('/api', {
+      target: target,
+      // secure: false,
+      changeOrigin: true
+    })
+  );
+};

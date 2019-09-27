@@ -1,6 +1,6 @@
 const BASE_URL={
   local: {
-    baseUrl: 'http://localhost:8888',
+    baseUrl: 'http://localhost:3000',
     redirect: '/#/login'
   },
   test: {

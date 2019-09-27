@@ -24,8 +24,8 @@ export default class NavMenu extends Component <{}, NState> {
         onClick={this.handleClick}
         selectedKeys={[this.state.current]}
       >
-        <Menu.Item key="articles">
-          <Link to="/front/articles">文 章</Link>
+        <Menu.Item key="article">
+          <Link to="/front/article">文 章</Link>
         </Menu.Item>
         <Menu.Item key="about">
           <Link to="/front/about">关于我</Link>

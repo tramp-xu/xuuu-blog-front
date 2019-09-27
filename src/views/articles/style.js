@@ -37,20 +37,28 @@ export const ArticleStyle = styled.div`
     border: 1px solid #ebedf0;
     padding: 20px 0 10px;
     border-radius: 3px;
-    cursor: pointer;
+    
 
     header {
       display: flex;
       height: 40px;
       margin-bottom: 10px;
       padding: 0 10px;
+      cursor: pointer;
 
       .title {
         flex: 1;
         font-size: 18px;
         font-weight: 700;
       }
+      &:hover {
+        .title {
+          color: #40a9ff;
+          text-decoration: underline;
+        }
+      }
     }
+
 
     .label {
       font-size: 12px;
@@ -71,11 +79,28 @@ export const ArticleStyle = styled.div`
     .tags-wrapper {
       flex: 1;
     }
+  }
+`;
 
-    &:hover {
-      .title {
-        text-decoration: underline;
-      }
-    }
+export const DetailWrapper = styled.div`
+  padding: 20px 20px 20px 40px;
+
+  .title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .info {
+    color: #909090;
+  }
+
+  .content {
+    margin: 20px 0 40px;
+  }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
   }
 `;

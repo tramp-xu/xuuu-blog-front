@@ -1,34 +1,27 @@
 import React from 'react';
 import { Tag } from 'antd';
+import { Link } from 'react-router-dom';
 import { ArticleStyle } from './style';
-
-export interface ArtcileModel {
-  id: string,
-  title: string,
-  short: string,
-  author: string,
-  content: any,
-  startDate: string,
-  updateDate?: string,
-  tags?: Array<string>
-}
+import { ArtcileModel } from '../../models/article';
 
 export interface AProps {
   model: ArtcileModel
 }
 
-function Article(props:AProps) {
+function ArticleItem(props:AProps) {
   const model = props.model;
-  const { title, author, short, startDate, tags } =  model;
+  const { title, author, short, startDate, tags, id } =  model;
 
   return (
     <ArticleStyle>
       <article>
-        <header>
-          <div className="title">{title}</div>
+        <Link to={`/front/article/detail/${id}`}>
+          <header>
+            <div className="title">{title}</div>
 
-          <div className="start-date"><span className="label">发布时间: </span>{startDate}</div>
-        </header>
+            <div className="start-date"><span className="label">发布时间: </span>{startDate}</div>
+          </header>
+        </Link>
         <p className="short">{short}</p>
         <footer>
           <div className="tags-wrapper">
@@ -46,7 +39,8 @@ function Article(props:AProps) {
         </footer>
       </article>
     </ArticleStyle>
+
   );
 }
 
-export default Article;
+export default ArticleItem;

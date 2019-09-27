@@ -18,6 +18,10 @@ module.exports = {
       // 支持最新 JavaScript
       "ecmaVersion": 2018,
       "sourceType": 'module',
+      "ecmaFeatures": {
+        "experimentalObjectRestSpread": true,
+        "jsx": true
+      },
   },
   "rules": {
     "indent": [WARN, 2],
@@ -29,7 +33,7 @@ module.exports = {
     "no-irregular-whitespace": OFF, //不规则的空白不允许
     "no-trailing-spaces": WARN, //一行结束后面有空格就发出警告
     "eol-last": OFF, //文件以单一的换行符结束
-    "no-unused-vars": [ERROR, {"vars": "all", "args": "after-used"}], //不能有声明后未被使用的变量或参数
+    "no-unused-vars": [WARN, {"vars": "all", "args": "after-used"}], //不能有声明后未被使用的变量或参数
     "no-underscore-dangle": OFF, //标识符不能以_开头或结尾
     "no-alert": ERROR, //禁止使用alert confirm prompt
     "no-lone-blocks": OFF, //禁止不必要的嵌套块
@@ -87,7 +91,7 @@ module.exports = {
     "no-mixed-spaces-and-tabs": OFF, //禁止混用tab和空格
     "prefer-arrow-callback": OFF, //比较喜欢箭头回调
     "arrow-parens": OFF, //箭头函数用小括号括起来
-    "arrow-spacing": OFF //=>的前/后括号
+    "arrow-spacing": ERROR //=>的前/后括号
   },
   "settings": {
     "import/ignore": [
