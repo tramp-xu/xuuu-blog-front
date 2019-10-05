@@ -13,7 +13,7 @@ export default class ArticleDetail extends Component<AProps> {
       <DetailWrapper>
         <article>
           <header>
-            <div className="title">标题</div>
+            <div className="title">标题 {id}</div>
             <div className="info">2019-04-03 阅读 1777</div>
           </header>
           <div className="content">

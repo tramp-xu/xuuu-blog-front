@@ -7,16 +7,9 @@ const Item = Form.Item;
 export interface LProps {
   form: any
 }
+
 class LoginForm extends Component<LProps> {
-  public handleSubmit = (e:any) => {
-    e.preventDefault();
-    this.props.form.validateFields((err: Error, values: string) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-        _login(values);
-      }
-    });
-  };
+  
   public render() {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -67,6 +60,16 @@ class LoginForm extends Component<LProps> {
       </Wrapper>
     );
   }
+
+  private handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.form.validateFields((err: Error, values: string) => {
+      if (!err) {
+        console.log('Received values of form: ', values);
+        _login(values);
+      }
+    });
+  };
 }
 
 const Login = Form.create({ name: 'normal_login' })(LoginForm);
