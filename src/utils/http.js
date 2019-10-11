@@ -10,6 +10,8 @@ import {message} from 'antd';
 // 配置允许跨域携带cookie
 axios.defaults.withCredentials = true;
 
+axios.defaults.ContentType = "application/x-www-form-urlencoded; charset=UTF-8"
+
 // 配置超时时间
 axios.defaults.timeout = 100000;
 
@@ -23,10 +25,12 @@ axios.interceptors.request.use(config => {
 axios.interceptors.response.use(
   response => {
     const data = response.data;
-    const success = data.success;
     const code = data.code;
     const resMessage = data.message;
-    if (success || code === 'success' || code === 200) {
+    if (code === 200) {
+      if (resMessage) {
+        message.success(resMessage);
+      }
       return Promise.resolve(data);
     } else if (code === 'user-not-login') {
       message.error(resMessage);
@@ -34,7 +38,7 @@ axios.interceptors.response.use(
       //   window.location.href = env.redirect;
       // }, 200);
       return Promise.reject(new Error('用户未登录'));
-    }else if(code === '201'){
+    } else if(code === '201'){
       message.info(resMessage);
       return Promise.reject(new Error(resMessage));
     } else {
@@ -132,7 +136,7 @@ http.post = (api, data) => {
     axios.post(api, data).then((res) => {
       resolve(res);
     }).catch((err) => {
-      reject(err);
+      console.error(err)
     });
   });
 };
