@@ -31,7 +31,10 @@ export default class NavMenu extends Component <{}, NState> {
           <Link to="/front/about">关于我</Link>
         </Menu.Item>
         <Menu.Item key="resume">
-          <Link to="/front/resume">简历</Link>
+          <Link to="/front/resume">简 历</Link>
+        </Menu.Item>
+        <Menu.Item key="editor">
+          <Link to="/admin/editor">编 辑</Link>
         </Menu.Item>
       </Menu>
     );

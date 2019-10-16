@@ -137,6 +137,7 @@ http.post = (api, data) => {
       resolve(res);
     }).catch((err) => {
       console.error(err)
+      reject(err)
     });
   });
 };
