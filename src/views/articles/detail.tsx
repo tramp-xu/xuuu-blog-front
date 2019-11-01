@@ -1,36 +1,106 @@
 import React, { Component } from 'react';
+import { Spin } from 'antd'
 import { DetailWrapper } from './style';
+import { _getArticle } from '../../apis/article/index'
+import Markdown from "react-markdown"
+import CodeBlock from '../../components/codeBlock/index'
+import dayjs from "dayjs";
 
-export interface AProps {
+interface Content {
+  id: number,
+  content: string
+}
+
+interface Article {
+  createdDate: string,
+  detail: Content,
+  id: number,
+  tags: string[],
+  shorter?: string,
+  title: string,
+  updatedDate: string,
+  viewCount: number
+}
+
+interface AProps {
   match: any
 }
 
-export default class ArticleDetail extends Component<AProps> {
+interface IState {
+  article: Article,
+  loading: boolean
+}
+
+export default class ArticleDetail extends Component<AProps, IState> {
+
+  public state = {
+    loading: false,
+    article: {
+      createdDate: '',
+      detail: {
+        id: 0,
+        content: ''
+      },
+      id: 0,
+      tags: [],
+      shorter: '',
+      title: '',
+      updatedDate: '',
+      viewCount: 0
+    }
+  }
+
+  public componentDidMount () {
+    let id:string = this.props.match.params.id
+    this.getArticle(id)
+  }
+
   public render() {
-    let { match } = this.props;
-    let id = match.params.id;
+    let { title, viewCount, detail, createdDate, tags } = this.state.article
     return (
       <DetailWrapper>
-        <article>
-          <header>
-            <div className="title">标题 {id}</div>
-            <div className="info">2019-04-03 阅读 1777</div>
-          </header>
-          <div className="content">
-            <p>刮刮卡是大家非常熟悉的一种网页交互元素了。实现刮涂层的效果，需要借助canvas来实现，想必每个前端工程师都清楚。</p>
-
-            <p>实现刮刮卡并不难，但其中却涉及很多知识点，掌握这些知识点，有助于我们更深刻理解原理，对于提升举一反三的能力很有帮助。</p>
-
-            <p>本期以实现刮刮卡为例，分享下如何科学合理地封装函数，并对涉及的相关知识点进行讲解。</p>
-
-            <p>先看下最终效果：</p>
-          </div>
-          <footer>
-            <div>上一篇： 点点滴滴</div>
-            <div>下一篇： 哈讲的是</div>
-          </footer>
-        </article>
+        <Spin
+          spinning={this.state.loading}
+          tip="Loading..."
+        >
+          <article>
+            <header>
+              <div className="title">{ title }</div>
+              <div className="info">{dayjs(createdDate).format('YYYY-MM-DD')} 阅读 {viewCount}</div>
+            </header>
+            <div className="content">
+              <Markdown
+                source={detail.content}
+                escapeHtml={false}
+                renderers={{
+                  code: CodeBlock
+                }}
+              />
+            </div>
+            {/* <footer>
+              <div>上一篇： 点点滴滴</div>
+              <div>下一篇： 哈讲的是</div>
+            </footer> */}
+          </article>
+        </Spin>
       </DetailWrapper>
     );
+  }
+
+  private getArticle = async (id:string) => { 
+    this.setState({
+      loading: true
+    });
+    try {
+      const resp = await _getArticle({id})
+      this.setState({
+        article: resp.data,
+        loading: false
+      })
+    } catch (error) {
+      this.setState({
+        loading: false
+      });
+    }
   }
 }

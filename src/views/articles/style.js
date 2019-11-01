@@ -86,7 +86,7 @@ export const DetailWrapper = styled.div`
   padding: 20px 20px 20px 40px;
 
   .title {
-    font-size: 18px;
+    font-size: 30px;
     font-weight: 700;
     margin-bottom: 10px;
   }

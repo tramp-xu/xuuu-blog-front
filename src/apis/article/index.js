@@ -8,3 +8,7 @@ export const _searchArticle = (data) => {
   return http.get('/api/article/search', data);
 };
 
+export const _getArticle = (data) => {
+  return http.get('/api/article/get', data);
+};
+

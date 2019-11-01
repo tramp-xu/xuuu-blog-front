@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Input, Form, Button, Select, Spin } from 'antd'
-import Markdown from "react-markdown"
 import { FormComponentProps } from 'antd/es/form'
+import Markdown from "react-markdown"
 import CodeBlock from '../../components/codeBlock/index'
 import { _addArticle } from "../../apis/article/index"
 import { Wrapper } from './style'
@@ -94,8 +94,7 @@ class EditorForm extends Component<Props, State> {
                     source={this.state.content}
                     escapeHtml={false}
                     renderers={{
-                      code: CodeBlock,
-                      table: CodeBlock
+                      code: CodeBlock
                     }}
                   />
                 </div>

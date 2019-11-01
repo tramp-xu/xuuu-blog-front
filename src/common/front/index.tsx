@@ -4,6 +4,7 @@ import Navbar from '../navbar/index';
 import Articles from '../../views/articles/index';
 import About from '../../views/about/index';
 import Resume from '../../views/resume/index';
+import Todo from '../../views/todo/index';
 
 
 export interface FProps {
@@ -32,6 +33,10 @@ class Front extends Component<FProps>{
           <Route
             component={Resume}
             path={`${match.path}/resume`}
+          ></Route>
+          <Route
+            component={Todo}
+            path={`${match.path}/todo`}
           ></Route>
         </Switch>
       </div>

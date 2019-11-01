@@ -1,10 +1,10 @@
 export interface ArtcileModel  {
   id: string,
   title: string,
-  short: string,
+  shorter: string,
   author: string,
   content: any,
-  startDate: string,
-  updateDate?: string,
+  createdDate: string,
+  updatedDate?: string,
   tags?: Array<string>
 }

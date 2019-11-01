@@ -1,8 +1,11 @@
 import React from 'react';
 import { Tag } from 'antd';
 import { Link } from 'react-router-dom';
+import Markdown from "react-markdown"
+import CodeBlock from '../../components/codeBlock/index'
 import { ArticleStyle } from './style';
 import { ArtcileModel } from '../../models/article';
+import dayjs from "dayjs";
 
 export interface AProps {
   model: ArtcileModel
@@ -10,8 +13,8 @@ export interface AProps {
 
 function ArticleItem(props:AProps) {
   const model = props.model;
-  const { title, author, short, startDate, tags, id } =  model;
-
+  const { title, shorter, createdDate, tags, id } =  model;
+  const createdTime = dayjs(createdDate).format('YYYY-MM-DD')
   return (
     <ArticleStyle>
       <article>
@@ -19,10 +22,17 @@ function ArticleItem(props:AProps) {
           <header>
             <div className="title">{title}</div>
 
-            <div className="start-date"><span className="label">发布时间: </span>{startDate}</div>
+            <div className="start-date"><span className="label">发布时间: </span>{createdTime}</div>
           </header>
         </Link>
-        <p className="short">{short}</p>
+        <Markdown
+          className="short"
+          source={shorter}
+          escapeHtml={false}
+          renderers={{
+            code: CodeBlock
+          }}
+        />
         <footer>
           <div className="tags-wrapper">
             {
@@ -35,12 +45,12 @@ function ArticleItem(props:AProps) {
               }) : ''
             }
           </div>
-          <div className="author"><span className="label">作者: </span>{author}</div>
+          <div className="author"><span className="label">作者: </span>Jerome Hsu</div>
         </footer>
       </article>
     </ArticleStyle>
-
   );
+  
 }
 
 export default ArticleItem;
