@@ -5,6 +5,7 @@ import Articles from '../../views/articles/index';
 import About from '../../views/about/index';
 import Resume from '../../views/resume/index';
 import Todo from '../../views/todo/index';
+import Tag from '../../views/tag/index';
 
 
 export interface FProps {
@@ -37,6 +38,10 @@ class Front extends Component<FProps>{
           <Route
             component={Todo}
             path={`${match.path}/todo`}
+          ></Route>
+          <Route
+            component={Tag}
+            path={`${match.path}/tag`}
           ></Route>
         </Switch>
       </div>

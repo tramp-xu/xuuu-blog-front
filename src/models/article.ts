@@ -1,3 +1,4 @@
+import { Tag } from "./tag";
 export interface ArtcileModel  {
   id: string,
   title: string,
@@ -6,5 +7,5 @@ export interface ArtcileModel  {
   content: any,
   createdDate: string,
   updatedDate?: string,
-  tags?: Array<string>
+  tags?: Array<Tag>
 }

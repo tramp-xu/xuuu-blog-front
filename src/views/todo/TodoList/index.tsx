@@ -4,8 +4,13 @@ import { ITodoItem } from "../todo";
 import { Button, Input } from 'antd'
 import { Wrapper } from './style.js'
 
+import { connect } from 'react-redux'
+import { addTodo } from "../../../store/todo/actions";
+import { AppState } from "../../../store/index"
+
 export interface IProps {
-  record: ITodoItem[],
+  record: ITodoItem[]
+  addTodo: any
 }
 
 export interface IStates {
@@ -13,7 +18,7 @@ export interface IStates {
   taskName: string
 }
 
-export default class TodoList extends React.Component<IProps, IStates> {
+class TodoList extends React.Component<IProps, IStates> {
 
   public state = {
     record: [...this.props.record],
@@ -59,6 +64,7 @@ export default class TodoList extends React.Component<IProps, IStates> {
 
   private addTask = ():void =>  {
     let {record, taskName} = this.state
+    this.props.addTodo(taskName)
     let task = {
       title: taskName
     }
@@ -76,3 +82,16 @@ export default class TodoList extends React.Component<IProps, IStates> {
     })
   }
 }
+
+const mapDispatchToProps = (dispatch:any) => ({
+  addTodo: (text:string) => dispatch(addTodo(text))
+})
+
+const mapStateToProps = (state:AppState) => ({
+  todos: state.todos
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TodoList)

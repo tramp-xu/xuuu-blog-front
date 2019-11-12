@@ -33,14 +33,15 @@ function ArticleItem(props:AProps) {
             code: CodeBlock
           }}
         />
+        <div className="more">... ...</div>
         <footer>
           <div className="tags-wrapper">
             {
-              tags ? tags.map((item, index) => {
+              tags ? tags.map((item) => {
                 return (
                   <Tag color="#2db7f5"
-                    key={index}
-                  >{item}</Tag>
+                    key={item.id}
+                  >{item.name}</Tag>
                 );
               }) : ''
             }

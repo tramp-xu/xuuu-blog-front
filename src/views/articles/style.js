@@ -70,6 +70,11 @@ export const ArticleStyle = styled.div`
       padding: 0 10px;
     }
 
+    .more {
+      line-height: 1.5;
+      padding-left: 10px;
+    }
+
     footer {
       display: flex;
       padding-top: 10px;

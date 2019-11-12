@@ -39,6 +39,9 @@ export default class NavMenu extends Component <{}, NState> {
         <Menu.Item key="todo">
           <Link to="/front/todo">Todo</Link>
         </Menu.Item>
+        <Menu.Item key="tag">
+          <Link to="/front/tag">标 签</Link>
+        </Menu.Item>
       </Menu>
     );
   }

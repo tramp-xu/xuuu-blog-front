@@ -62,7 +62,7 @@ export default class ArticleList extends Component<{}, IState> {
   public render() {
     return (
       <>
-        <Swapper />
+        {/* <Swapper /> */}
         <Spin
           spinning={this.state.loading}
           tip="Loading..."
@@ -71,7 +71,7 @@ export default class ArticleList extends Component<{}, IState> {
             <div className="article-wrapper">
               {this._renderArticles(this.state.list)}
             </div>
-            <div className="minor-info"></div>
+            {/* <div className="minor-info"></div> */}
           </ContentWrapper>
         </Spin>
       </>

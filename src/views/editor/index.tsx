@@ -3,7 +3,9 @@ import { Input, Form, Button, Select, Spin } from 'antd'
 import { FormComponentProps } from 'antd/es/form'
 import Markdown from "react-markdown"
 import CodeBlock from '../../components/codeBlock/index'
+import { Tag } from "../../models/tag";
 import { _addArticle } from "../../apis/article/index"
+import { _searchTag } from "../../apis/tag/index"
 import { Wrapper } from './style'
 
 const Item = Form.Item
@@ -19,20 +21,22 @@ interface Props extends FormComponentProps {
 interface State {
   content: string,
   language: string,
-  loading: boolean
+  loading: boolean,
+  tags: Array<Tag>
 }
 
-const children: any[] = [];
-for (let i = 10; i < 36; i++) {
-  children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
-}
 
 class EditorForm extends Component<Props, State> {
 
   public state = {
     content: '',
     language: '',
-    loading: false
+    loading: false,
+    tags: []
+  }
+
+  public componentDidMount () {
+    this.getTags()
   }
 
   public changeContent = (e:React.ChangeEvent<HTMLTextAreaElement>):void => {
@@ -45,7 +49,7 @@ class EditorForm extends Component<Props, State> {
   public handleChange = (value: any):void => {
     console.log(`selected ${value}`);
   }
-
+ 
   public render() {
     const { getFieldDecorator } = this.props.form
     return (
@@ -103,7 +107,13 @@ class EditorForm extends Component<Props, State> {
               <Item label="标 题" hasFeedback>
                 {
                   getFieldDecorator('tags', {
-                    initialValue: ['a10', 'c12']
+                    initialValue: [],
+                    rules: [
+                      {
+                        required: true,
+                        message: 'Please change your tags!'
+                      },
+                    ]
                   })(
                     <Select
                         mode="multiple"
@@ -111,7 +121,11 @@ class EditorForm extends Component<Props, State> {
                         placeholder="Please select"
                         onChange={this.handleChange}
                       >
-                      {children}
+                        {
+                          this.state.tags.map((item:Tag) => (
+                            <Option key={item.id}>{item.name}</Option>
+                          ))
+                        }
                     </Select>
                   )
                 }
@@ -130,7 +144,6 @@ class EditorForm extends Component<Props, State> {
   private publish = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     this.props.form.validateFields(async (err: Error, values: string) => {
-      console.log(values)
       if (!err) {
         this.setState({
           loading: true
@@ -150,6 +163,17 @@ class EditorForm extends Component<Props, State> {
     });
   };
 
+  private getTags = async () => {
+    try {
+      const resp = await _searchTag()
+      console.log(resp)
+      this.setState({
+        tags: resp.data
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  }
 }
 
 const Editor = Form.create({ name: 'editor' })(EditorForm);
