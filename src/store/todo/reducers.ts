@@ -1,4 +1,4 @@
-import { ADD_TODO, TOGGLE_TODO, SET_VISIBILITY_FILTER, TodoActionTypes, TodoState, Todo, SHOW_ALL } from "./type";
+import { ADD_TODO, TOGGLE_TODO, TodoActionTypes, TodoState, Todo, SHOW_ALL } from "./type";
 // import { combineReducers } from "redux";
 const initalState: TodoState = {
   todos: [],

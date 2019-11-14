@@ -73,14 +73,17 @@ class TagAddContent extends Component<IProps, IState> {
   private handleSubmit = () => {
     this.props.form.validateFields( async (err: Error, values: string) => {
       if (!err) {
-        console.log('Received values of form: ', values);
         try {
           await _addTag(values)
           this.props.refresh()
+          this.setState({
+            visible: false
+          }, () => {
+            this.props.form.resetFields()
+          })
         } catch (error) {
           console.error(error)
-        }
-        
+        }       
       }
     });
   };

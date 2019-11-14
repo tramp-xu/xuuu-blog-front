@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Swapper from './swapper';
+// import Swapper from './swapper';
 import { ContentWrapper } from './style';
 import ArticleItem from './item';
 import { ArtcileModel } from '../../models/article';

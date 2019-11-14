@@ -12,3 +12,10 @@ export const _getTag = (data) => {
   return http.get('/api/tag/get', data);
 };
 
+export const _deleteTag = (data) => {
+  return http.post('/api/tag/delete', data);
+};
+
+export const _editTag = (data) => {
+  return http.post('/api/tag/edit', data);
+};

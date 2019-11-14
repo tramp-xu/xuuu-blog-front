@@ -1,8 +1,7 @@
 import React from 'react';
 import { Tag } from 'antd';
 import { Link } from 'react-router-dom';
-import Markdown from "react-markdown"
-import CodeBlock from '../../components/codeBlock/index'
+import Markdown from '../../components/markdown/index'
 import { ArticleStyle } from './style';
 import { ArtcileModel } from '../../models/article';
 import dayjs from "dayjs";
@@ -25,15 +24,12 @@ function ArticleItem(props:AProps) {
             <div className="start-date"><span className="label">发布时间: </span>{createdTime}</div>
           </header>
         </Link>
-        <Markdown
-          className="short"
-          source={shorter}
-          escapeHtml={false}
-          renderers={{
-            code: CodeBlock
-          }}
-        />
-        <div className="more">... ...</div>
+        <div className="short">
+          <Markdown
+            source={shorter}
+          />
+        </div>
+        {/* <div className="more">... ...</div> */}
         <footer>
           <div className="tags-wrapper">
             {

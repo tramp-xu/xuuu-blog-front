@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Spin } from 'antd'
+import { Spin, Tag } from 'antd'
 import { DetailWrapper } from './style';
 import { _getArticle } from '../../apis/article/index'
-import Markdown from "react-markdown"
-import CodeBlock from '../../components/codeBlock/index'
+// import Markdown from "react-markdown"
+import Markdown from '../../components/markdown/index'
+// import MarkNav from 'markdown-navbar'
 import dayjs from "dayjs";
+import { Tag as TagModel } from "../../models/tag";
 
 interface Content {
   id: number,
@@ -15,7 +17,7 @@ interface Article {
   createdDate: string,
   detail: Content,
   id: number,
-  tags: string[],
+  tags: TagModel[],
   shorter?: string,
   title: string,
   updatedDate: string,
@@ -71,16 +73,26 @@ export default class ArticleDetail extends Component<AProps, IState> {
             <div className="content">
               <Markdown
                 source={detail.content}
-                escapeHtml={false}
-                renderers={{
-                  code: CodeBlock
-                }}
               />
+              {/* <MarkNav
+                className="article-menu"
+                source={detail.content}
+                headingTopOffset={80}
+              /> */}
             </div>
-            {/* <footer>
-              <div>上一篇： 点点滴滴</div>
-              <div>下一篇： 哈讲的是</div>
-            </footer> */}
+            <footer>
+            <div className="tags-wrapper">
+            {
+              tags ? tags.map((item:TagModel) => {
+                return (
+                  <Tag color="#2db7f5"
+                    key={item.id}
+                  >{item.name}</Tag>
+                );
+              }) : ''
+            }
+          </div>
+            </footer>
           </article>
         </Spin>
       </DetailWrapper>
