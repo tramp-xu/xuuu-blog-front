@@ -1,22 +1,26 @@
 import React, { Component } from 'react'
 import { Input, Form, Button, Select, Spin } from 'antd'
 import { FormComponentProps } from 'antd/es/form'
+import Markdown from "react-markdown"
+import CodeBlock from '../../components/codeBlock/index'
 import { Tag } from "../../models/tag";
 import { _addArticle } from "../../apis/article/index"
 import { _searchTag } from "../../apis/tag/index"
 import { Wrapper } from './style'
 import SimpleMDE from "simplemde";
-import "simplemde/dist/simplemde.min.css"
 
 const Item = Form.Item
+const { TextArea } = Input
 const { Option } = Select
 
 interface Props extends FormComponentProps {
   form: any,
-  title: string
+  title: string,
+  content: string
 }
 
 interface State {
+  content: string,
   language: string,
   loading: boolean,
   tags: Array<Tag>,
@@ -27,12 +31,11 @@ interface State {
 class EditorForm extends Component<Props, State> {
 
   public state = {
+    content: '',
     language: '',
     loading: false,
     tags: [],
-    editor: {
-      value: () => ''
-    }
+    editor: null
   }
 
   public componentDidMount () {
@@ -40,6 +43,17 @@ class EditorForm extends Component<Props, State> {
     this.initEditor()
   }
 
+  public changeContent = (e:React.ChangeEvent<HTMLTextAreaElement>):void => {
+    const { value } = e.target
+    this.setState({
+      content: value
+    })
+  }
+
+  public handleChange = (value: any):void => {
+    console.log(`selected ${value}`);
+  }
+ 
   public render() {
     const { getFieldDecorator } = this.props.form
     return (
@@ -62,18 +76,23 @@ class EditorForm extends Component<Props, State> {
                 })(<Input />)}
                 </Item>
               </header>
-              <Item label="标 题">
-                {getFieldDecorator('content', {
-                  rules: [{
-                    message: 'Please input your content'
-                  }, {
-                    validator: this.normContent
-                  }]
-
-                })(<textarea className="editor" />)}
-                
-              </Item>
-              <Item label="标 签">
+              <div className="content-wrapper">
+                <div className="editor"></div>
+                {/* <div className="read">
+                  <div className="title">
+                    文本预览: 
+                  </div>
+                  <Markdown
+                    source={this.state.content || ''}
+                    escapeHtml={false}
+                    renderers={{
+                      code: CodeBlock
+                    }}
+                  />
+                </div> */}
+              
+              </div>
+              <Item label="标 题" hasFeedback>
                 {
                   getFieldDecorator('tags', {
                     initialValue: [],
@@ -88,6 +107,7 @@ class EditorForm extends Component<Props, State> {
                         mode="multiple"
                         style={{ width: '100%' }}
                         placeholder="Please select"
+                        onChange={this.handleChange}
                       >
                         {
                           this.state.tags.map((item:Tag) => (
@@ -111,16 +131,13 @@ class EditorForm extends Component<Props, State> {
 
   private publish = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    this.props.form.validateFields(async (err: Error, values: object) => {
+    this.props.form.validateFields(async (err: Error, values: string) => {
       if (!err) {
         this.setState({
           loading: true
         });
-        let content = this.state.editor.value()
         try {
-          await _addArticle({
-            ...values, content
-          });
+          await _addArticle(values);
           this.setState({
             loading: false
           });
@@ -133,14 +150,6 @@ class EditorForm extends Component<Props, State> {
       }
     });
   };
-  private normContent = (rule:any, value:any, callback:any) => {
-    let content = this.state.editor ? (this.state.editor.value ? this.state.editor.value() : '') : ''
-
-    if (!content) {
-      callback("Please input content")
-    }
-    callback()
-  }
 
   private getTags = async () => {
     try {
@@ -155,6 +164,7 @@ class EditorForm extends Component<Props, State> {
   }
 
   private initEditor = () => {
+    // let editorDom = document.querySelector(".editor")
     let editor = new SimpleMDE({
       element: document.getElementById("editor") || undefined
     })
