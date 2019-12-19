@@ -6,12 +6,27 @@ import About from '../../views/about/index';
 import Resume from '../../views/resume/index';
 import Todo from '../../views/todo/index';
 import Tag from '../../views/tag/index';
+import User from '../../views/user/index';
+import Editor from '../../views/editor/index';
 
 
 export interface FProps {
   match: any
 }
 class Front extends Component<FProps>{
+
+  // public componentDidMount () {
+  //   let source = new EventSource('http://192.168.137.1:8080/api/message/get')
+  //   source.onopen = (event) => {
+  //     console.log('成功连接服务器')
+  //   }
+
+  //   source.onmessage = (event) => {
+  //     console.log('未命名事件')
+  //     console.log(event.data)
+  //   }
+  // }
+
   public render (){
     let { match } = this.props;
     return (
@@ -40,8 +55,16 @@ class Front extends Component<FProps>{
             path={`${match.path}/todo`}
           ></Route>
           <Route
+            component={Editor}
+            path={`${match.path}/editor`}
+          ></Route>
+          <Route
             component={Tag}
             path={`${match.path}/tag`}
+          ></Route>
+          <Route
+            component={User}
+            path={`${match.path}/user`}
           ></Route>
         </Switch>
       </div>
