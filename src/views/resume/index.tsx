@@ -4,7 +4,7 @@ export default class Articles extends Component {
   public render() {
     return (
       <div>
-        resume me  jenkinsDDDDD
+        resume
       </div>
     );
   }
