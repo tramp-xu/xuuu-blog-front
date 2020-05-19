@@ -4,92 +4,161 @@
 <head>
   <meta charset="UTF-8">
   <title>${ENV, var="JOB_NAME"}-第${BUILD_NUMBER}次构建日志</title>
+  <style TYPE="text/css">
+    p, ul, li, div, h3, h4, pre {
+      padding: 0;
+      margin: 0;
+    }
+    .jenkins-email {
+      font-family: -apple-system,BlinkMacSystemFont,segoe ui,
+      Roboto,helvetica neue,Arial,noto sans,sans-serif,
+      apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji !important;
+    }
+    .jenkins-email_header {
+      color: #52c41a;
+    }
+    .jenkins-email_main {
+      width: 80%;
+      margin: 0 auto;
+    }
+
+    .jenkins-email_card {
+      line-height: 1.5;
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      margin: 20px 0;
+    }
+    .jenkins-email_card header {
+      line-height: 40px;
+      border-bottom: 1px solid #d5d5d5;
+      padding: 0 20px;
+    }
+    .jenkins-email_card .card_info {
+      list-style: none;
+      padding: 20px 20px 30px;
+    }
+
+    .jenkins-email_card .card_info > li {
+      margin-bottom: 10px;
+      display: -webkit-box; /* Chrome 4+, Safari 3.1, iOS Safari 3.2+ */  
+      display: -moz-box; /* Firefox 17- */  
+      display: -webkit-flex; /* Chrome 21+, Safari 6.1+, iOS Safari 7+, Opera 15/16 */  
+      display: -moz-flex; /* Firefox 18+ */  
+      display: -ms-flexbox; /* IE 10 */  
+      display: flex; /* Chrome 29+, Firefox 22+, IE 11+, Opera 12.1/17/18, Android 4.4+ */  
+      color: #333;
+    }
+    .jenkins-email_card .card_info > li > .label {
+      margin-right: 16px;
+      color: #aaa;
+      width: 100px;
+    }
+
+    .log-area {
+      -webkit-box-flex: 1;
+      -ms-flex: 1;
+      -webkit-flex: 1;
+      flex: 1;    
+      font-size: 14px;
+    }
+
+    @media screen and (max-width: 600px) {
+      .jenkins-email_main {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 12px;
+      }
+    }
+  </style>
 </head>
 
-<body leftmargin="8" marginwidth="0" topmargin="8" marginheight="4" offset="0">
-
-  <head>
-    <STYLE TYPE="text/css">
-      BODY {
-        background-image: URL(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525328482473&di=79b0b72f1551478d2103cdf9116950cb&imgtype=0&src=http%3A%2F%2Fattach.bbs.miui.com%2Fforum%2F201602%2F15%2F214501jhqfq55gzyupzz2f.png);
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-size: 100% 100%;
-      }
-    </STYLE>
-  </head>
-  <table width="95%" cellpadding="0" cellspacing="0"
-    style="font-size: 11pt; font-family: Tahoma, Arial, Helvetica, sans-serif">
-    <tr>
-      <td>(本邮件是Jenkins构建项目完成之后自动下发的，请勿回复！)</td>
-    </tr>
-    <tr>
-      <td>
-        <h2>
-          <font color="#20B2AA">构建结果 - ${BUILD_STATUS}</font>
-        </h2>
-      </td>
-    </tr>
-    <tr>
-      <td><br /><b>
-          <font color="#0B610B">构建信息</font>
-        </b>
-        <hr size="2" width="100%" align="center" />
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <ul>
-          <li>项目名称&nbsp;：&nbsp;${PROJECT_NAME}</li>
-          <li>构建编号&nbsp;：&nbsp;第${BUILD_NUMBER}次构建</li>
-          <li>Git&nbsp;版本：&nbsp;${branch}</li>
-          <li>发布者：&nbsp;${CAUSE}</li>
-          <li>构建日志：&nbsp;<a href="${BUILD_URL}console">${BUILD_URL}console</a></li>
-          <li>构建&nbsp;&nbsp;Url&nbsp;：&nbsp;<a href="${BUILD_URL}">${BUILD_URL}</a></li>
-          <li>工作目录&nbsp;：&nbsp;<a href="${PROJECT_URL}ws">${PROJECT_URL}ws</a></li>
-          <li>项目&nbsp;&nbsp;Url&nbsp;：&nbsp;<a href="${PROJECT_URL}">${PROJECT_URL}</a></li>
+<body class="jenkins-email">
+  <main class="jenkins-email_main">
+    <header class="jenkins-email_header">
+      <h2>${PROJECT_NAME} 构建结果: ${BUILD_STATUS}</h2>
+    </header>
+    <article>
+      <p>(本邮件是Jenkins构建项目完成之后自动下发的，请勿回复！)</p>
+      <section class="jenkins-email_card">
+        <header><h3>构建信息</h4></header>
+        <ul class="card_info">
+          <li>
+            <div class="label">项目名称</div>
+            <div>${PROJECT_NAME}</div>
+          </li>
+          <li>
+            <div class="label">项目显示名称</div>
+            <div>${PROJECT_DISPLAY_NAME}</div>
+          </li>
+          <li>
+            <div class="label">Jenkins 地址</div>
+            <div>${JENKINS_URL}</div>
+          </li>
+          <li>
+            <div class="label">项目描述</div>
+            <div>${JOB_DESCRIPTION}</div>
+          </li>
+          <li>
+            <div class="label">构建编号</div>
+            <div>${BUILD_NUMBER}</div>
+          </li>
+          <li>
+            <div class="label">Git 版本</div>
+            <div>${branch}</div>
+          </li>
+          <li>
+            <div class="label">发布者</div>
+            <div>${CAUSE}</div>
+          </li>
+          <li>
+            <div class="label">Git Commit</div>
+            <div>${GIT_COMMIT}</div>
+          </li>
+          <li>
+            <div class="label">构建日志</div>
+            <div><a href="${BUILD_URL}console">日志地址</a></div>
+          </li>
+          <li>
+            <div class="label">构建地址</div>
+            <div><a href="${BUILD_URL}">${BUILD_URL}</a></div>
+          </li>
+          <li>
+            <div class="label">工作目录</div>
+            <div><a href="${PROJECT_URL}ws">${PROJECT_URL}ws</a></div>
+          </li>
+          <li>
+            <div class="label">项目地址</div>
+            <div><a href="${PROJECT_URL}">${PROJECT_URL}</a></div>
+          </li>
         </ul>
-      </td>
-    </tr>
-    <tr>
-      <td><b>
-          <font color="#0B610B">Changes Since Last Successful Build:</font>
-        </b>
-        <hr size="2" width="100%" align="center" />
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <ul>
-          <li>历史变更记录 : <a href="${PROJECT_URL}changes">${PROJECT_URL}changes</a></li>
-        </ul> ${CHANGES_SINCE_LAST_SUCCESS,reverse=true, format="Changes for Build
-        #%n:<br />%c<br />",showPaths=true,changesFormat="
-        <pre>[%a]<br />%m</pre>",pathFormat="&nbsp;&nbsp;&nbsp;&nbsp;%p"}
-      </td>
-    </tr>
-    <tr>
-      <td><b>Failed Test Results</b>
-        <hr size="2" width="100%" align="center" />
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <pre style="font-size: 11pt; font-family: Tahoma, Arial, Helvetica, sans-serif">$FAILED_TESTS</pre><br /></td>
-    </tr>
-    <tr>
-      <td><b>
-          <font color="#0B610B">构建日志 (最后 100行):</font>
-        </b>
-        <hr size="2" width="100%" align="center" />
-      </td>
-    </tr>
-    <!-- <tr>            <td>Test Logs (if test has ran): <a                href="${PROJECT_URL}ws/TestResult/archive_logs/Log-Build-${BUILD_NUMBER}.zip">${PROJECT_URL}/ws/TestResult/archive_logs/Log-Build-${BUILD_NUMBER}.zip</a>      <br />            <br />            </td>        </tr> -->
-    <tr>
-      <td><textarea cols="80" rows="30" readonly="readonly"
-          style="font-family: Courier New">${BUILD_LOG, maxLines=100}</textarea></td>
-    </tr>
-  </table>
-</body>
+      </section>
 
+      <section class="jenkins-email_card">
+        <header><h3>历史变更 & 失败测试记录</h4></header>
+        <ul class="card_info">
+          <li>
+            <div class="label">历史变更记录: </div>
+            <div><a href="${PROJECT_URL}changes">${PROJECT_URL}changes</a></div>
+          </li>
+          <li>
+            <div class="label">失败测试记录: </div>
+            <div>
+              ${FAILED_TESTS}
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section class="jenkins-email_card">
+        <header><h3>构建日志</h4></header>
+        <ul class="card_info">
+          <li>
+            <div class="label">最后 100 行: </div>
+<pre class="log-area">${BUILD_LOG, maxLines=100}</pre>
+          </li>
+        </ul>
+      </section>
+    </article>
+  </main>
+</body>
 </html>
